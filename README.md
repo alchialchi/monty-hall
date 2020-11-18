@@ -1,6 +1,6 @@
-# Getting Started with Create React App
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+This project simulates popular game called "Monty Hall". You can read more about this game from [here](https://en.wikipedia.org/wiki/Monty_Hall_problem).
 
 ## Available Scripts
 
