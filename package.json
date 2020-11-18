@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
@@ -11,6 +13,7 @@
     "@types/node": "^12.19.5",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
+    "@types/supertest": "^2.0.10",
     "express": "^4.17.1",
     "nodemon": "^2.0.6",
     "react": "^17.0.1",
@@ -44,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "supertest": "^6.0.1"
   }
 }

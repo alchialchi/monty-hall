@@ -1,10 +1,66 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import styled from "@emotion/styled";
+
+const Container = styled.div`
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
+
+const Button = styled.button`
+  margin: 8px 0;
+  box-shadow: 0px 2px 0px 0px #1b96c2;
+  background-color: #61dafb;
+  border-radius: 14px;
+  border: 1px solid #208ea1;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 17px;
+  padding: 16px 31px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #46a4b5;
+  &:hover {
+    background-color: #2aa0bd;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+`;
+
+const Form = styled.div`
+  margin-top: 32px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const InputSimulations = styled.input`
+  margin: 8px 0;
+  font-size: 16px;
+  border-color: #61dafb;
+  border-style: solid;
+  border-radius: 7px;
+  border-width: 2px;
+  padding: 9px;
+`;
+
+const Checkbox = styled.input`
+  width: 20px;
+`;
 
 function App() {
   const [apiResponse, setApiResponse] = useState(null);
-  const [simulations, setSimulations] = useState("");
+  const [simulations, setSimulations] = useState("1000");
   const [switchDoor, setSwitchDoor] = useState(false);
 
   const handleSimulationsChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,38 +92,36 @@ function App() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const result = await handleRunSimulatins(simulations, switchDoor);
-    console.log(result);
     setApiResponse(result);
   };
 
-  console.log(simulations, switchDoor);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <form onSubmit={handleSubmit}>
-          <label>
-            how many times?
-            <input
-              type="number"
-              value={simulations}
-              onChange={handleSimulationsChange}
-            />
-          </label>
-          <label>
-            switch the door?
-            <input
-              type="checkbox"
-              checked={switchDoor}
-              onChange={handleSwitchChange}
-            />
-          </label>
-          <button onClick={handleSubmit}>Run simulation</button>
-        </form>
-        <div>results: {apiResponse}</div>
-      </header>
-    </div>
+    <Container>
+      <img
+        src="https://media.giphy.com/media/l2Sq8I4EiPDN5fqj6/giphy.gif"
+        alt="Monty Hall Show"
+      />
+      <Form onSubmit={handleSubmit}>
+        <label>How many times?</label>
+        <InputSimulations
+          type="number"
+          value={simulations}
+          onChange={handleSimulationsChange}
+        />
+        <label>
+          Switch the door?
+          <Checkbox
+            type="checkbox"
+            checked={switchDoor}
+            onChange={handleSwitchChange}
+          />
+        </label>
+        <Button disabled={simulations ? false : true} onClick={handleSubmit}>
+          Run simulation
+        </Button>
+      </Form>
+      {apiResponse ? <div>You won {apiResponse} times!</div> : null}
+    </Container>
   );
 }
 
