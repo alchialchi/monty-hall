@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import { simulateGame } from "../../monty-hall/src/Game";
+import { simulateGame } from "../client/src/Game";
 
 const cors = require("cors");
 export const app = express();
