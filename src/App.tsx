@@ -2,19 +2,22 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-function App() {
-  const [apiResponse, setApiResponse] = useState("");
+import { simulateGame } from "./Game";
 
-  const callAPI = () => {
-    fetch("http://localhost:9000/testAPI")
-      .then(res => res.text())
-      .then(res => setApiResponse(res))
-      .catch(err => err);
+function App() {
+  const [apiResponse, setApiResponse] = useState(null);
+
+  const callAPI = async () => {
+    const response = await fetch("http://localhost:8000");
+    const getAnswer = await response.json();
+    setApiResponse(getAnswer);
   };
 
   useEffect(() => {
     callAPI();
   }, []);
+
+  console.log("game", simulateGame(100, true));
 
   return (
     <div className="App">
