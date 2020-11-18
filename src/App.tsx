@@ -1,40 +1,71 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import { simulateGame } from "./Game";
-
 function App() {
   const [apiResponse, setApiResponse] = useState(null);
+  const [simulations, setSimulations] = useState("");
+  const [switchDoor, setSwitchDoor] = useState(false);
 
-  const callAPI = async () => {
-    const response = await fetch("http://localhost:8000");
-    const getAnswer = await response.json();
-    setApiResponse(getAnswer);
+  const handleSimulationsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSimulations(event.target.value);
   };
 
-  useEffect(() => {
-    callAPI();
-  }, []);
+  const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSwitchDoor(event.target.checked);
+  };
 
-  console.log("game", simulateGame(100, true));
+  const handleRunSimulatins = async (
+    simulations: string,
+    switchDoor: boolean
+  ) => {
+    const sendParams = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        simulations: parseFloat(simulations),
+        switchDoor
+      })
+    };
+
+    const response = await fetch("http://localhost:8000", sendParams);
+    const json = await response.json();
+    return json;
+  };
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    const result = await handleRunSimulatins(simulations, switchDoor);
+    console.log(result);
+    setApiResponse(result);
+  };
+
+  console.log(simulations, switchDoor);
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <div>{apiResponse}</div>
+        <form onSubmit={handleSubmit}>
+          <label>
+            how many times?
+            <input
+              type="number"
+              value={simulations}
+              onChange={handleSimulationsChange}
+            />
+          </label>
+          <label>
+            switch the door?
+            <input
+              type="checkbox"
+              checked={switchDoor}
+              onChange={handleSwitchChange}
+            />
+          </label>
+          <button onClick={handleSubmit}>Run simulation</button>
+        </form>
+        <div>results: {apiResponse}</div>
       </header>
     </div>
   );
