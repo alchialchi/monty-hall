@@ -116,7 +116,7 @@ function App() {
             onChange={handleSwitchChange}
           />
         </label>
-        <Button disabled={simulations ? false : true} onClick={handleSubmit}>
+        <Button disabled={!simulations} onClick={handleSubmit}>
           Run simulation
         </Button>
       </Form>
