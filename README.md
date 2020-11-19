@@ -6,34 +6,27 @@ The application was bootstrapped with [Create React App](https://github.com/face
 
 ## How to use
 
-Open the project folder and run the following command to install:
+Open the project folder and run the following commands:
 
-You'll need 2 tabs.
+# First tab
 
-First one for the server. Open api folder and install dependencies:
+Follow these commands to start the server:
 
 ```bash
+cd api
 npm install
-```
-
-Start the server by running in api folder
-
-```bash
 npm start
-
 ```
 
 Server should be running on `http://localhost:8000` / or you can see it in terminal.
 
+# Second tab
+
 Open client folder in the second tab:
 
 ```bash
+cd client
 npm install
-```
-
-Start the development server by running
-
-```bash
 npm start
 ```
 
