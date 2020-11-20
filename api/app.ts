@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import { simulateGame } from "./Game";
+import { simulateGame } from "./game";
 
 const cors = require("cors");
 export const app = express();
@@ -20,6 +20,8 @@ app.post("/", function(req, res) {
   const results = simulateGame(simulations, switchDoor);
   res.send(results + "");
 });
+
+app.get("/status", (req, res, next) => res.sendStatus(200));
 
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);

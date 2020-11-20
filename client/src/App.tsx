@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
@@ -58,10 +58,17 @@ const Checkbox = styled.input`
   width: 20px;
 `;
 
+const Alert = styled.p`
+  color: red;
+  text-transform: uppercase;
+  font-size: 12px;
+`;
+
 function App() {
   const [apiResponse, setApiResponse] = useState(null);
   const [simulations, setSimulations] = useState("1000");
   const [switchDoor, setSwitchDoor] = useState(false);
+  const [serverStatus, setServerStatus] = useState("");
 
   const handleSimulationsChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSimulations(event.target.value);
@@ -88,6 +95,16 @@ function App() {
     const json = await response.json();
     return json;
   };
+
+  const callAPI = () => {
+    fetch("http://localhost:8000/status")
+      .then(res => res.text())
+      .then(res => setServerStatus(res));
+  };
+
+  useEffect(() => {
+    callAPI();
+  }, []);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -120,7 +137,14 @@ function App() {
           Run simulation
         </Button>
       </Form>
-      {apiResponse ? <div>You won {apiResponse} times!</div> : null}
+      {apiResponse && serverStatus ? (
+        <div>You won {apiResponse} times!</div>
+      ) : null}
+      {serverStatus ? null : (
+        <Alert>
+          Server is not running, run npm start in api folder and reload the page
+        </Alert>
+      )}
     </Container>
   );
 }

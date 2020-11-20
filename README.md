@@ -20,6 +20,12 @@ npm start
 
 Server should be running on `http://localhost:8000` / or you can see it in terminal.
 
+You can run tests with:
+
+```bash
+npm test
+```
+
 # Second tab
 
 Open client folder in the second tab:
@@ -31,3 +37,5 @@ npm start
 ```
 
 The application should be running on `http://localhost:3000`.
+
+It was tested in node v15.0.1
